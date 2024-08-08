@@ -21,26 +21,17 @@ public class EvseService {
     EvseRepo  evseRepo;
 
     @Autowired
-    SiteRepo  siteRepo;
+    EvseCustomRepo evseCustomRepo;
 
     @Autowired
-    EvseCustomRepo evseCustomRepo;
+    SiteRepo siteRepo;
 
     @Autowired
     SiteCustomRepo siteCustomRepo;
 
 
 
-    public List<Site> getSites() {
-        List<Site> sites = siteRepo.findAll();
-        return sites;
-    }
 
-    public void addSite(Site site) {
-        site.setEvseCount(0);
-        site.setEvses(new ArrayList<>());
-        siteRepo.save(site);
-    }
 
     public void retireEvse(String evseId) {
         evseCustomRepo.retireEvse(evseId);
@@ -74,5 +65,10 @@ public class EvseService {
 
     public void removeEvse(String evseId) {
         evseRepo.deleteById(evseId);
+    }
+
+    public void removeAll() {
+        siteRepo.deleteAll();
+        evseRepo.deleteAll();
     }
 }

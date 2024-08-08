@@ -19,7 +19,7 @@ import java.util.List;
 @Document(collection = "sites")
 public class Site {
     @Id
-    private Integer siteId; 8 digit
+    private String siteId; //8 digit
     private String siteName;
     private String address1;
     private String address2;

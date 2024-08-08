@@ -54,7 +54,11 @@ public class Controller {
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
+    @DeleteMapping("/sites")
+    public ResponseEntity<Object> removeAll(){
+        service.removeAll();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
     @DeleteMapping("/evse/{id}")
     public ResponseEntity<Object> removeEvse(@PathVariable String id){
     service.removeEvse(id);
