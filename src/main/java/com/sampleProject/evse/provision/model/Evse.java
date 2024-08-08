@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 public class Evse{
     @Id
-   private String evseId; //= serial_num:site_id
+    private String evseId; //= serial_num:site_id
 
     private Long serialNumber; //= abc
     private String displayName;

@@ -36,39 +36,28 @@ public class EvseService {
     public void retireEvse(String evseId) {
         evseCustomRepo.retireEvse(evseId);
         String siteId = evseRepo.findById(evseId).get().getSiteId();
-        //decrease evseCount
-        siteCustomRepo.decreaseEvseCount(siteId);
+        siteCustomRepo.decreaseEvseCount(siteId); //decrease evseCount
     }
 
     public void addEvse(String siteId, Evse evse) {
         evse.setRetired(false);
         evse.setSiteId(siteId);
-        //increase evseCount
-        siteCustomRepo.increaseEvseCount(siteId);
+
+        siteCustomRepo.increaseEvseCount(siteId); //increase evseCount
         evseRepo.save(evse);
     }
 
 
-    public Site getOneSite(String siteId) {
+    public Site getOneSiteEvseDetails(String siteId) {
         List<Evse> evses = evseRepo.findBysiteId(siteId);
         Site site = siteRepo.findById(siteId).get();
         site.setEvses(evses);
         return site;
     }
 
-
-    public void removeSite(String siteId) {
-        siteRepo.deleteById(siteId);
-        evseRepo.deleteBySiteId(siteId);
-    }
-
-
     public void removeEvse(String evseId) {
         evseRepo.deleteById(evseId);
     }
 
-    public void removeAll() {
-        siteRepo.deleteAll();
-        evseRepo.deleteAll();
-    }
+
 }
