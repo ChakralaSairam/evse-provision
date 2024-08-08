@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 public class Evse{
+
     @Id
     private String evseId; //= serial_num:site_id
 
@@ -21,6 +22,5 @@ public class Evse{
     private String displayName;
     private boolean isRetired;
     private String siteId; //= 123
-
 
 }

@@ -6,10 +6,13 @@ import com.sampleProject.evse.provision.repository.EvseRepo;
 import com.sampleProject.evse.provision.repository.SiteCustomRepo;
 import com.sampleProject.evse.provision.repository.SiteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Service
 public class SiteService {
 
     @Autowired
