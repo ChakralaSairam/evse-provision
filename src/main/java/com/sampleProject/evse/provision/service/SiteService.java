@@ -5,6 +5,7 @@ import com.sampleProject.evse.provision.repository.EvseCustomRepo;
 import com.sampleProject.evse.provision.repository.EvseRepo;
 import com.sampleProject.evse.provision.repository.SiteCustomRepo;
 import com.sampleProject.evse.provision.repository.SiteRepo;
+import com.sampleProject.evse.provision.requestDTO.SiteInitialInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,13 +38,14 @@ public class SiteService {
         return sites;
     }
 
-    public void addSite(Site site) {
+    public void addSite(SiteInitialInfoDto siteInitialInfoDto) {
+        Site site = new Site(siteInitialInfoDto);
         site.setEvseCount(0);
         site.setSiteId(BigInteger.valueOf(sequenceGeneratorService.generateSequence(Site.SEQUENCE)));
         siteRepo.save(site);
     }
 
-    public void removeSite(String siteId) {
+    public void removeSite(BigInteger siteId) {
         siteRepo.deleteById(siteId);
         evseRepo.deleteBySiteId(siteId);
     }

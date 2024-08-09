@@ -1,6 +1,7 @@
 package com.sampleProject.evse.provision.controller;
 
 import com.sampleProject.evse.provision.model.Site;
+import com.sampleProject.evse.provision.requestDTO.SiteInitialInfoDto;
 import com.sampleProject.evse.provision.service.EvseService;
 import com.sampleProject.evse.provision.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 
@@ -28,13 +30,13 @@ public class SiteController {
     }
 
     @PostMapping("/sites")
-    public ResponseEntity<Object> addSite(@RequestBody Site site){
-        siteService.addSite(site);
+    public ResponseEntity<Object> addSite(@RequestBody SiteInitialInfoDto siteInitialInfoDto){
+        siteService.addSite(siteInitialInfoDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/sites/{id}")
-    public ResponseEntity<Object> removeSite(@PathVariable String id){
+    public ResponseEntity<Object> removeSite(@PathVariable BigInteger id){
         siteService.removeSite(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

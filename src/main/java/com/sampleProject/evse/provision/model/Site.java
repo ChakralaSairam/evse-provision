@@ -1,6 +1,7 @@
 package com.sampleProject.evse.provision.model;
 
 
+import com.sampleProject.evse.provision.requestDTO.SiteInitialInfoDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,16 @@ public class Site {
     private String state;
     private String country;
     private Integer evseCount;
+
+
+    public Site(SiteInitialInfoDto s){
+        siteName = s.getSiteName();
+        address1 = s.getAddress1();
+        address2 = s.getAddress2();
+        city = s.getCity();
+        state = s.getState();
+        country = s.getCountry();
+    }
 
 
 

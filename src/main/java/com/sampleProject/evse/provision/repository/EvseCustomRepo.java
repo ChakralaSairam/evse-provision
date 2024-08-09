@@ -1,5 +1,6 @@
 package com.sampleProject.evse.provision.repository;
 
+import com.sampleProject.evse.provision.model.Evse;
 import com.sampleProject.evse.provision.model.Site;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -22,7 +23,7 @@ public class EvseCustomRepo {
         query.addCriteria(Criteria.where("evseId").is(evseId));
         Update update=new Update();
         update.set("isRetired",true);
-        Site site = mongoTemplate.findAndModify(query,update,Site.class);
+        Evse evse = mongoTemplate.findAndModify(query,update,Evse.class);
 
     }
 }

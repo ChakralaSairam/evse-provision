@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +38,11 @@ public class EvseService {
 
     public void retireEvse(String evseId) {
         evseCustomRepo.retireEvse(evseId);
-        String siteId = evseRepo.findById(evseId).get().getSiteId();
+        BigInteger siteId = evseRepo.findById(evseId).get().getSiteId();
         siteCustomRepo.decreaseEvseCount(siteId); //decrease evseCount
     }
 
-    public void addEvse(String siteId, EvseInitialInfoDto evseInitialInfoDto) {
+    public void addEvse(BigInteger siteId, EvseInitialInfoDto evseInitialInfoDto) {
         Evse evse = new Evse();
         evse.setRetired(false);
         evse.setSiteId(siteId);
@@ -55,7 +56,7 @@ public class EvseService {
     }
 
 
-    public SiteEvseDetailsDto getOneSiteEvseDetails(String siteId) {
+    public SiteEvseDetailsDto getOneSiteEvseDetails(BigInteger siteId) {
         List<Evse> evses = evseRepo.findBysiteId(siteId);
         SiteEvseDetailsDto siteEvseDetailsDto = new SiteEvseDetailsDto();
         siteEvseDetailsDto.setEvses(evses);

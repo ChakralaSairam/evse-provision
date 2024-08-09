@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
+
 
 @Repository
 public class SiteCustomRepo {
@@ -16,7 +18,7 @@ public class SiteCustomRepo {
     MongoTemplate mongoTemplate;
 
 
-    public void decreaseEvseCount(String siteId) {
+    public void decreaseEvseCount(BigInteger siteId) {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("siteId").is(siteId));
@@ -26,7 +28,7 @@ public class SiteCustomRepo {
 
     }
 
-    public void increaseEvseCount(String siteId) {
+    public void increaseEvseCount(BigInteger siteId) {
         Query query = new Query();
         query.addCriteria(Criteria.where("siteId").is(siteId));
         Update update=new Update();

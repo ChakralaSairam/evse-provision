@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -25,14 +26,13 @@ public class EvseController {
 
 
     @GetMapping("/sites/{id}")
-    public ResponseEntity<Object> getOneSiteEvseDetails(@PathVariable String id){
+    public ResponseEntity<Object> getOneSiteEvseDetails(@PathVariable BigInteger id){
         return new ResponseEntity<>(evseService.getOneSiteEvseDetails(id) ,HttpStatus.OK);
     }
 
 
-
     @PostMapping("/sites/{id}/evse")
-    public ResponseEntity<Object> addEvse(@PathVariable String id, @RequestBody EvseInitialInfoDto evse){
+    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id, @RequestBody EvseInitialInfoDto evse){
         evseService.addEvse(id,evse);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
