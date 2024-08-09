@@ -3,6 +3,8 @@ package com.sampleProject.evse.provision.controller;
 
 import com.sampleProject.evse.provision.model.Evse;
 import com.sampleProject.evse.provision.model.Site;
+import com.sampleProject.evse.provision.requestDTO.EvseInitialInfoDto;
+import com.sampleProject.evse.provision.responseDTO.SiteEvseDetailsDto;
 import com.sampleProject.evse.provision.service.EvseService;
 import com.sampleProject.evse.provision.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +26,13 @@ public class EvseController {
 
     @GetMapping("/sites/{id}")
     public ResponseEntity<Object> getOneSiteEvseDetails(@PathVariable String id){
-        Site site = evseService.getOneSiteEvseDetails(id);
-        return new ResponseEntity<>(site,HttpStatus.OK);
+        return new ResponseEntity<>(evseService.getOneSiteEvseDetails(id) ,HttpStatus.OK);
     }
 
 
 
     @PostMapping("/sites/{id}/evse")
-    public ResponseEntity<Object> addEvse(@PathVariable String id, @RequestBody Evse evse){
+    public ResponseEntity<Object> addEvse(@PathVariable String id, @RequestBody EvseInitialInfoDto evse){
         evseService.addEvse(id,evse);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

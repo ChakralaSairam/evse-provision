@@ -8,6 +8,7 @@ import com.sampleProject.evse.provision.repository.SiteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,16 +17,19 @@ import java.util.List;
 public class SiteService {
 
     @Autowired
-    EvseRepo evseRepo;
+    private EvseRepo evseRepo;
 
     @Autowired
-    EvseCustomRepo evseCustomRepo;
+    private EvseCustomRepo evseCustomRepo;
 
     @Autowired
-    SiteRepo siteRepo;
+    private SiteRepo siteRepo;
 
     @Autowired
-    SiteCustomRepo siteCustomRepo;
+    private SiteCustomRepo siteCustomRepo;
+
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
 
 
     public List<Site> getSites() {
@@ -35,7 +39,7 @@ public class SiteService {
 
     public void addSite(Site site) {
         site.setEvseCount(0);
-        site.setEvses(new ArrayList<>());
+        site.setSiteId(BigInteger.valueOf(sequenceGeneratorService.generateSequence(Site.SEQUENCE)));
         siteRepo.save(site);
     }
 
