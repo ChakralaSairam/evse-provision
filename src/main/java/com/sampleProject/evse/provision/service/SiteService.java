@@ -1,11 +1,13 @@
 package com.sampleProject.evse.provision.service;
 
+import com.sampleProject.evse.provision.model.Evse;
 import com.sampleProject.evse.provision.model.Site;
 import com.sampleProject.evse.provision.repository.EvseCustomRepo;
 import com.sampleProject.evse.provision.repository.EvseRepo;
 import com.sampleProject.evse.provision.repository.SiteCustomRepo;
 import com.sampleProject.evse.provision.repository.SiteRepo;
 import com.sampleProject.evse.provision.requestDTO.SiteInitialInfoDto;
+import com.sampleProject.evse.provision.responseDTO.SiteCompleteInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +35,17 @@ public class SiteService {
     private SequenceGeneratorService sequenceGeneratorService;
 
 
-    public List<Site> getSites() {
+    public List<SiteCompleteInfoDto> getSites() {
         List<Site> sites = siteRepo.findAll();
-        return sites;
+        List<SiteCompleteInfoDto> sitesWithEvseDetails = new ArrayList<>();
+
+        sites.forEach(site -> {
+            List<Evse> evses = evseRepo.findBysiteId(site.getSiteId());
+            SiteCompleteInfoDto siteWithEvseDetails = new SiteCompleteInfoDto(site,evses);
+            sitesWithEvseDetails.add(siteWithEvseDetails);
+        });
+
+        return sitesWithEvseDetails;
     }
 
     public void addSite(SiteInitialInfoDto siteInitialInfoDto) {

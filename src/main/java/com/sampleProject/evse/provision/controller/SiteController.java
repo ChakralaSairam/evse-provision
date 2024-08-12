@@ -2,6 +2,7 @@ package com.sampleProject.evse.provision.controller;
 
 import com.sampleProject.evse.provision.model.Site;
 import com.sampleProject.evse.provision.requestDTO.SiteInitialInfoDto;
+import com.sampleProject.evse.provision.responseDTO.SiteCompleteInfoDto;
 import com.sampleProject.evse.provision.service.EvseService;
 import com.sampleProject.evse.provision.service.SiteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class SiteController {
 
 
     @GetMapping("/sites")
-    public ResponseEntity<List<Site>> getSites(){
-        List<Site> sites = siteService.getSites();
-        return new ResponseEntity<>(sites, HttpStatus.OK);
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<SiteCompleteInfoDto> getSites(){
+        List<SiteCompleteInfoDto> sites = siteService.getSites();
+        return sites;
     }
 
     @PostMapping("/sites")
