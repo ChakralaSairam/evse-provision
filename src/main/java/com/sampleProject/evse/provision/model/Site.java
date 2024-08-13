@@ -34,7 +34,7 @@ public class Site {
     private String city;
     private String state;
     private String country;
-    private Integer evseCount;
+    private int evseCount;
 
 
     public Site(SiteInitialInfoDto s){

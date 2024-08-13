@@ -1,5 +1,6 @@
 package com.sampleProject.evse.provision.service;
 
+import com.sampleProject.evse.provision.exception.SiteNotFoundException;
 import com.sampleProject.evse.provision.model.Evse;
 import com.sampleProject.evse.provision.model.Site;
 import com.sampleProject.evse.provision.repository.EvseCustomRepo;
@@ -9,7 +10,9 @@ import com.sampleProject.evse.provision.repository.SiteRepo;
 import com.sampleProject.evse.provision.requestDTO.SiteInitialInfoDto;
 import com.sampleProject.evse.provision.responseDTO.SiteCompleteInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -55,14 +58,20 @@ public class SiteService {
         siteRepo.save(site);
     }
 
-    public void removeSite(BigInteger siteId) {
+    public void removeSite(BigInteger siteId){
+
         siteRepo.deleteById(siteId);
         evseRepo.deleteBySiteId(siteId);
     }
 
     public void removeAll() {
+
         siteRepo.deleteAll();
         evseRepo.deleteAll();
+    }
+
+    public boolean isSiteExist(BigInteger siteId){
+        return siteRepo.existsById(siteId);
     }
 
 

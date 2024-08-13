@@ -23,7 +23,7 @@ public class SiteCompleteInfoDto {
     private String city;
     private String state;
     private String country;
-    private Integer evseCount;
+    private int evseCount;
     List<Evse> evses;
 
 
@@ -35,6 +35,7 @@ public class SiteCompleteInfoDto {
         this.address2 = site.getAddress2();
         this.state = site.getState();
         this.country = site.getCountry();
+        this.evseCount = site.getEvseCount();
         this.evses = evses;
     }
 }

@@ -8,6 +8,7 @@ import com.sampleProject.evse.provision.repository.EvseRepo;
 import com.sampleProject.evse.provision.repository.SiteCustomRepo;
 import com.sampleProject.evse.provision.repository.SiteRepo;
 import com.sampleProject.evse.provision.requestDTO.EvseInitialInfoDto;
+import com.sampleProject.evse.provision.responseDTO.EvseCompleteInfoDto;
 import com.sampleProject.evse.provision.responseDTO.SiteEvseDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -37,9 +38,10 @@ public class EvseService {
 
 
     public void retireEvse(String evseId) {
+        Evse evse = evseRepo.findById(evseId).get();
         evseCustomRepo.retireEvse(evseId);
-        BigInteger siteId = evseRepo.findById(evseId).get().getSiteId();
-        siteCustomRepo.decreaseEvseCount(siteId); //decrease evseCount
+        BigInteger siteId = evse.getSiteId();
+        siteCustomRepo.decreaseEvseCount(siteId);    //decrease evseCount
     }
 
     public void addEvse(BigInteger siteId, EvseInitialInfoDto evseInitialInfoDto) {
@@ -68,4 +70,18 @@ public class EvseService {
     }
 
 
+
+    public boolean isEvseExist(String id) {
+        return evseRepo.existsById(id);
+    }
+
+    public boolean isEvseRetired(String id) {
+        return evseRepo.findById(id).get().isRetired();
+    }
+
+    public EvseCompleteInfoDto getEvseDetails(String id) {
+        Evse evse = evseRepo.findById(id).get();
+        EvseCompleteInfoDto evseDetails = new EvseCompleteInfoDto(evse);
+        return evseDetails;
+    }
 }
