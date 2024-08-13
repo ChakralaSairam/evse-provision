@@ -14,6 +14,7 @@ public class EvseInitialInfoDto {
     @Size(min = 12,max = 12)
     @Pattern(regexp = "^[0-9]*$")
     String serialNumber;
+
     @NotBlank(message = " Display name should not be blank")
     @Pattern(regexp = "^[-_ a-zA-Z0-9]+$")
     String displayName;

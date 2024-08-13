@@ -23,7 +23,7 @@ public class SiteInitialInfoDto {
     private String address1;
 
 
-    @Size(min=2, max=60)
+    @Size(max=60)
     private String address2;
 
 
@@ -34,7 +34,7 @@ public class SiteInitialInfoDto {
 
 
     @Pattern(regexp = "^[ a-zA-Z]+$")
-    @Size(min = 2,max = 20)
+    @Size(max = 20)
     private String state;
 
     @Size(min = 2,max=20)

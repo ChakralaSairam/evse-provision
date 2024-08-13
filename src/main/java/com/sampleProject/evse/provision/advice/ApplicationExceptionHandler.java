@@ -46,11 +46,11 @@ public class ApplicationExceptionHandler {
 //        ErrorDetails error = new ErrorDetails(LocalDate.now(), HttpStatus.NOT_FOUND, "URL request not found");
 //        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
 //    }
-//
+////
 //    @ExceptionHandler(Exception.class)
 //    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorDetails handleAllDefaultException(Exception ex,WebRequest request){
-//        return new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR,"Error Occurred is: "+ex.getMessage(), request.getDescription(false));
+//    public ErrorDetails handleAllDefaultException(Exception ex, WebRequest request) {
+//        return new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "Error Occurred is: " + ex.getMessage(), request.getDescription(false));
 //    }
 
 
