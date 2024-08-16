@@ -4,12 +4,14 @@ package com.sampleProject.evse.provision.requestDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 @Getter@Setter
+@AllArgsConstructor
 public class EvseInitialInfoDto {
     @NotBlank(message = " Serial number should not be blank")
     @Size(min = 12,max = 12)

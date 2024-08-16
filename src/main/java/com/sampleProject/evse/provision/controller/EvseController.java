@@ -46,7 +46,7 @@ public class EvseController {
 
 
     @PostMapping("/sites/{id}/evse")
-    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id, @RequestBody @Valid  EvseInitialInfoDto evse) throws SiteNotFoundException, DuplicateValueException {
+    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id, @RequestBody @Valid  EvseInitialInfoDto evse) throws SiteNotFoundException, DuplicateValueException, EvseNotFoundException {
         if(!siteService.isSiteExist(id)) {
             throw new SiteNotFoundException("Site does not exist");
         }

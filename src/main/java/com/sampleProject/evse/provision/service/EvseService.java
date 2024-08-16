@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,8 @@ public class EvseService {
 
         evse.setDisplayName(displayName);
         evse.setSerialNumber(serialNum);
-        evse.setEvseId(serialNum + ":" + siteId);
+        evse.setEvseId(serialNum + ":" + Instant.now().toEpochMilli() + ":" + siteId);
+//        evse.setEvseId(serialNum + ":" + siteId);
         siteCustomRepo.increaseEvseCount(siteId); //increase evseCount
         evseRepo.insert(evse);
     }
