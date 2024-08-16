@@ -13,8 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SiteInitialInfoDto {
     @NotBlank(message = "Site name should not be blank")
-    @Pattern(regexp = "^[-_ a-zA-Z0-9]+$")
+    @Pattern(regexp = "^[-_ a-zA-Z0-9]*$")
     @Size(min=2, max=20)
+
     private String siteName;
 
 
@@ -28,17 +29,17 @@ public class SiteInitialInfoDto {
 
 
     @NotBlank(message = " city field should not be blank")
-    @Pattern(regexp = "^[ a-zA-Z]+$")
+    @Pattern(regexp = "^[ a-zA-Z]*$")
     @Size(min = 2,max = 20)
     private String city;
 
 
-    @Pattern(regexp = "^[ a-zA-Z]+$")
+    @Pattern(regexp = "^[ a-zA-Z]*$")
     @Size(max = 20)
     private String state;
 
     @Size(min = 2,max=20)
     @NotBlank(message = " country field should not be blank")
-    @Pattern(regexp = "^[ a-zA-Z]+$")
+    @Pattern(regexp = "^[ a-zA-Z]*$")
     private String country;
 }

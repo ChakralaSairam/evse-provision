@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 @Getter@Setter
 public class EvseInitialInfoDto {
@@ -16,6 +17,6 @@ public class EvseInitialInfoDto {
     String serialNumber;
 
     @NotBlank(message = " Display name should not be blank")
-    @Pattern(regexp = "^[-_ a-zA-Z0-9]+$")
+    @Pattern(regexp = "^[-_ a-zA-Z0-9]*$")
     String displayName;
 }

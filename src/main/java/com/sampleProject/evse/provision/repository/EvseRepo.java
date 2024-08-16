@@ -2,7 +2,6 @@ package com.sampleProject.evse.provision.repository;
 
 import com.sampleProject.evse.provision.model.Evse;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -14,5 +13,6 @@ public interface EvseRepo extends MongoRepository<Evse,String> {
 
     List<Evse> findBysiteId(BigInteger siteId);
 
+    List<Evse> findAllByIsRetiredAndSerialNumber(boolean isRetired, String serialNumber);
 
 }

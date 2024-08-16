@@ -1,6 +1,7 @@
 package com.sampleProject.evse.provision.service;
 
 
+import com.sampleProject.evse.provision.exception.DuplicateValueException;
 import com.sampleProject.evse.provision.model.Evse;
 import com.sampleProject.evse.provision.model.Site;
 import com.sampleProject.evse.provision.repository.EvseCustomRepo;
@@ -44,17 +45,22 @@ public class EvseService {
         siteCustomRepo.decreaseEvseCount(siteId);    //decrease evseCount
     }
 
-    public void addEvse(BigInteger siteId, EvseInitialInfoDto evseInitialInfoDto) {
+    public void addEvse(BigInteger siteId, EvseInitialInfoDto evseInitialInfoDto) throws DuplicateValueException {
+        String serialNum = evseInitialInfoDto.getSerialNumber();
+        String displayName = evseInitialInfoDto.getDisplayName();
+
+        if(!evseRepo.findAllByIsRetiredAndSerialNumber(false, serialNum).isEmpty())
+            throw new DuplicateValueException("Evse with this serial number already exists");
         Evse evse = new Evse();
         evse.setRetired(false);
         evse.setSiteId(siteId);
-        String serialNum = evseInitialInfoDto.getSerialNumber();
-        String displayName = evseInitialInfoDto.getDisplayName();
+
+
         evse.setDisplayName(displayName);
         evse.setSerialNumber(serialNum);
         evse.setEvseId(serialNum + ":" + siteId);
         siteCustomRepo.increaseEvseCount(siteId); //increase evseCount
-        evseRepo.save(evse);
+        evseRepo.insert(evse);
     }
 
 
@@ -68,7 +74,6 @@ public class EvseService {
     public void removeEvse(String evseId) {
         evseRepo.deleteById(evseId);
     }
-
 
 
     public boolean isEvseExist(String id) {

@@ -1,6 +1,8 @@
 package com.sampleProject.evse.provision.advice;
 
 
+import com.mongodb.MongoWriteException;
+import com.sampleProject.evse.provision.exception.DuplicateValueException;
 import com.sampleProject.evse.provision.exception.ErrorDetails;
 import com.sampleProject.evse.provision.exception.EvseNotFoundException;
 import com.sampleProject.evse.provision.exception.SiteNotFoundException;
@@ -19,6 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,18 +43,19 @@ public class ApplicationExceptionHandler {
     }
 
 
-//    @ExceptionHandler(NoHandlerFoundException.class)
-////    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    public ResponseEntity<ErrorDetails> handleNoHandlerFoundException(NoHandlerFoundException ex){
-//        ErrorDetails error = new ErrorDetails(LocalDate.now(), HttpStatus.NOT_FOUND, "URL request not found");
-//        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-//    }
-////
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorDetails handleAllDefaultException(Exception ex, WebRequest request) {
-//        return new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "Error Occurred is: " + ex.getMessage(), request.getDescription(false));
-//    }
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<ErrorDetails> handleNoResourceFoundException(NoResourceFoundException ex,WebRequest request){
+        ErrorDetails error = new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "API request cannot be processed", request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorDetails handleAllDefaultException(Exception ex, WebRequest request) {
+        return new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "Error Occurred is: " + ex.getMessage(), request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
 
 
     @ExceptionHandler(SiteNotFoundException.class)
@@ -80,6 +84,21 @@ public class ApplicationExceptionHandler {
         });
 
         return ResponseEntity.unprocessableEntity().body(errorDetailsMap);
+    }
+
+
+//    @ExceptionHandler(MongoWriteException.class)
+//    public ResponseEntity<Object> handleMongoWriteException(MongoWriteException ex,WebRequest request) {
+//        ErrorDetails error = new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "Error: Duplicate entity detected",
+//                request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+//        return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
+    @ExceptionHandler(DuplicateValueException.class)
+    public ResponseEntity<Object> handleDuplicateValueException(DuplicateValueException ex,WebRequest request) {
+        ErrorDetails error = new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(),
+                request.getDescription(false),ex.getErrorCode());
+        return ResponseEntity.internalServerError().body(error);
     }
 
 //    @ExceptionHandler(MethodArgumentNotValidException.class)

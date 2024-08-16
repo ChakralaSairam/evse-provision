@@ -1,6 +1,7 @@
 package com.sampleProject.evse.provision.controller;
 
 
+import com.sampleProject.evse.provision.exception.DuplicateValueException;
 import com.sampleProject.evse.provision.exception.EvseNotFoundException;
 import com.sampleProject.evse.provision.exception.SiteNotFoundException;
 import com.sampleProject.evse.provision.model.Evse;
@@ -45,7 +46,7 @@ public class EvseController {
 
 
     @PostMapping("/sites/{id}/evse")
-    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id, @RequestBody @Valid  EvseInitialInfoDto evse) throws SiteNotFoundException {
+    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id, @RequestBody @Valid  EvseInitialInfoDto evse) throws SiteNotFoundException, DuplicateValueException {
         if(!siteService.isSiteExist(id)) {
             throw new SiteNotFoundException("Site does not exist");
         }
