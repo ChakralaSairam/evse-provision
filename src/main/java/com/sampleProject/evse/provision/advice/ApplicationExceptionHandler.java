@@ -51,11 +51,11 @@ public class ApplicationExceptionHandler {
     }
 
 
-//    @ExceptionHandler(Exception.class)
-//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-//    public ErrorDetails handleAllDefaultException(Exception ex, WebRequest request) {
-//        return new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "Error Occurred is: " + ex.getMessage(), request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
-//    }
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorDetails handleAllDefaultException(Exception ex, WebRequest request) {
+        return new ErrorDetails(LocalDate.now(), HttpStatus.INTERNAL_SERVER_ERROR, "Error Occurred is: " + ex.getMessage(), request.getDescription(false), HttpStatus.INTERNAL_SERVER_ERROR.value());
+    }
 
 
     @ExceptionHandler(SiteNotFoundException.class)

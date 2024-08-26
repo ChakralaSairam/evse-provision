@@ -15,4 +15,7 @@ public interface EvseRepo extends MongoRepository<Evse,String> {
 
     List<Evse> findAllByIsRetiredAndSerialNumber(boolean isRetired, String serialNumber);
 
+    boolean existsBySerialNumber(String serialNumber);
+
+    Evse findBySerialNumber(String serialNumber);
 }

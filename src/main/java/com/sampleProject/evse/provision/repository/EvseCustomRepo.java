@@ -26,4 +26,13 @@ public class EvseCustomRepo {
         Evse evse = mongoTemplate.findAndModify(query,update,Evse.class);
 
     }
+
+    public void updateVersion(String serialNumber, String fmVersion) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("serialNumber").is(serialNumber));
+        Update update=new Update();
+        update.set("fmVersion",fmVersion);
+        Evse evse = mongoTemplate.findAndModify(query,update,Evse.class);
+    }
 }

@@ -13,7 +13,9 @@ import com.sampleProject.evse.provision.responseDTO.EvseCompleteInfoDto;
 import com.sampleProject.evse.provision.responseDTO.SiteEvseDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigInteger;
 import java.time.Instant;
@@ -60,6 +62,7 @@ public class EvseService {
         evse.setDisplayName(displayName);
         evse.setSerialNumber(serialNum);
         evse.setEvseId(serialNum + ":" + Instant.now().toEpochMilli() + ":" + siteId);
+        evse.setFmVersion("v0_1");
 //        evse.setEvseId(serialNum + ":" + siteId);
         siteCustomRepo.increaseEvseCount(siteId); //increase evseCount
         evseRepo.insert(evse);
@@ -90,5 +93,18 @@ public class EvseService {
         Evse evse = evseRepo.findById(id).get();
         EvseCompleteInfoDto evseDetails = new EvseCompleteInfoDto(evse);
         return evseDetails;
+    }
+
+    public void updateVersion(String serialNumber, String fmVersion) throws ResponseStatusException{
+        String currentVersion = evseRepo.findBySerialNumber(serialNumber).getFmVersion();
+        if(currentVersion.equals(fmVersion)){
+            throw new ResponseStatusException(HttpStatus.OK, "Evse is already in that version");
+        }
+        evseCustomRepo.updateVersion(serialNumber,fmVersion);
+    }
+
+    public boolean isEvseExistWithSerialNumber(String serialNumber) {
+
+         return evseRepo.existsBySerialNumber(serialNumber);
     }
 }

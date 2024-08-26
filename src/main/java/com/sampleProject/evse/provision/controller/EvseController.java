@@ -6,7 +6,9 @@ import com.sampleProject.evse.provision.exception.EvseNotFoundException;
 import com.sampleProject.evse.provision.exception.SiteNotFoundException;
 import com.sampleProject.evse.provision.model.Evse;
 import com.sampleProject.evse.provision.model.Site;
+import com.sampleProject.evse.provision.repository.EvseRepo;
 import com.sampleProject.evse.provision.requestDTO.EvseInitialInfoDto;
+import com.sampleProject.evse.provision.requestDTO.EvseVersionDto;
 import com.sampleProject.evse.provision.responseDTO.SiteEvseDetailsDto;
 import com.sampleProject.evse.provision.service.EvseService;
 import com.sampleProject.evse.provision.service.SiteService;
@@ -29,6 +31,9 @@ public class EvseController {
     @Autowired
     private SiteService siteService;
 
+    @Autowired
+    private EvseRepo evseRepo;
+
 
     @GetMapping("/sites/{id}")
     public ResponseEntity<Object> getOneSiteEvseDetails(@PathVariable BigInteger id) throws SiteNotFoundException {
@@ -46,10 +51,14 @@ public class EvseController {
 
 
     @PostMapping("/sites/{id}/evse")
-    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id, @RequestBody @Valid  EvseInitialInfoDto evse) throws SiteNotFoundException, DuplicateValueException, EvseNotFoundException {
+    public ResponseEntity<Object> addEvse(@PathVariable BigInteger id,
+                                          @RequestBody @Valid  EvseInitialInfoDto evse)
+            throws SiteNotFoundException, DuplicateValueException, EvseNotFoundException
+    {
         if(!siteService.isSiteExist(id)) {
             throw new SiteNotFoundException("Site does not exist");
         }
+
         evseService.addEvse(id,evse);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -64,6 +73,16 @@ public class EvseController {
         }
         evseService.retireEvse(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/version/update")
+    public void updateVersion(@RequestBody EvseVersionDto evseVersionDto) throws EvseNotFoundException, ResponseStatusException{
+        String serialNumber = evseVersionDto.getSerialNumber();
+        if(!evseService.isEvseExistWithSerialNumber(serialNumber)){
+            throw new EvseNotFoundException("Evse doesnt exist with this serial number");
+        }
+        evseService.updateVersion(serialNumber,evseVersionDto.getFmVersion());
+
     }
 
 

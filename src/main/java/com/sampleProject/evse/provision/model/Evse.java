@@ -19,9 +19,10 @@ public class Evse{
     @Id
     private String evseId; //= serial_num:site_id
 
-    private String serialNumber; //= abc
+    private String serialNumber;
     private String displayName;
     private boolean isRetired;
-    private BigInteger siteId; //= 123
+    private BigInteger siteId;
+    private String fmVersion;
 
 }

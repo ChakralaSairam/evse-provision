@@ -19,6 +19,7 @@ public class EvseCompleteInfoDto {
     private String displayName;
     private boolean isRetired;
     private BigInteger siteId;
+    private String fmVersion;
 
     public EvseCompleteInfoDto(Evse evse) {
         this.evseId = evse.getEvseId();
@@ -26,5 +27,6 @@ public class EvseCompleteInfoDto {
         this.displayName = evse.getDisplayName();
         this.isRetired = evse.isRetired();
         this.siteId = evse.getSiteId();
+        this.fmVersion = evse.getFmVersion();
     }
 }
